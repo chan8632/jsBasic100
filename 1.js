@@ -1,15 +1,16 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString();
-const n = parseInt(input, 10);
 
-for (let i = 0; i <= n; i++) {
-  let star = "";
-  for (let j = 1; j <= n - j; j++) {
-    star += " ";
+const word = input.split("");
+let result = '';
+for (let i = 0; i < word.length; i++) {
+  if (i === word.length - 1) {
+    continue;
   }
-  for (let k = 1; k <= 2 * n - 1; k++) {
-    star += "*";
-  }
-  console.log(star);
+  result += word[i] + " " + word[i + 1] + "\n";
 }
+console.log(result);
+
+
+

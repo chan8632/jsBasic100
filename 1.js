@@ -2,11 +2,13 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString();
 function bubble(arr) {
-  let result = arr.slice();
-  console.log(">> 함수안에 콘솔로그" + result);
+  let result = arr.slice(); // 원본 배열 복사
+
   for (let i = 0; i < result.length - 1; i++) {
-    if (result[i] > result[i + 1]) {
-      [result[i], result[i + 1]] = [result[i + 1], result[i]];
+    for (let j = 0; j < result.length - i; j++) {
+      if (result[j] > result[j + 1]) {
+          [result[j], result[j + 1]] = [result[j + 1], result[j]];
+      }
     }
   }
   return result;

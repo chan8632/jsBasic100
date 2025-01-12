@@ -1,21 +1,20 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString();
-function bubble(arr) {
-  let result = arr.slice(); // 원본 배열 복사
 
-  for (let i = 0; i < result.length - 1; i++) {
-    for (let j = 0; j < result.length - i; j++) {
-      if (result[j] > result[j + 1]) {
-          [result[j], result[j + 1]] = [result[j + 1], result[j]];
-      }
-    }
+const scoreList = input.split(" ").map(Number);
+const sortScoreList = scoreList.sort((a, b) => a - b);
+let top3List = [];
+let count = 0;
+console.log(sortScoreList);
+while (top3List.length <= 3) {
+  let curScore = sortScoreList.pop();
+  if (!top3List.includes(curScore)) {
+    top3List.push(curScore);
   }
-  return result;
+  count += 1;
+  console.log("top3List : " + top3List);
+  console.log("curScore : " + curScore);
+  console.log("count : " + count);
 }
-
-const items = input.split(" ").map((n) => {
-  return parseInt(n, 10);
-});
-
-console.log(bubble(items));
+console.log(count);

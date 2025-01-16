@@ -1,24 +1,39 @@
 "use strict";
 const fs = require("fs");
-const input = fs.readFileSync("./tc.txt").toString();
+const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const scoreList = input.split(" ").map(Number);
-const sortScoreList = scoreList.sort((a, b) => a - b);
-
-
-let count = 0;
-let arr = [];
-
-while (arr.length < 3) {
-  let n = sortScoreList.pop();
-  if (!arr.includes(n)) {
-    arr.push(n);
+function mergeSort(arr){
+  if (arr.length <= 1){
+    return arr;
   }
-  count += 1;
-  console.log('카운트 : ' + count);
-  console.log('값 : ' + n);
-  console.log('arr의 길이 : ' + arr.length);
-  console.log("-----------------------");
+
+  const mid = Math.floor(arr.length / 2);
+  const left = arr.slice(0,mid);
+  const right = arr.slice(mid);
+
+  return merge(mergeSort(left), mergeSort(right));
 }
 
-console.log(count);
+function merge(left, right){
+  let result = [];
+
+  while (/*빈칸을 채워주세요*/ && /*빈칸을 채워주세요*/){
+    if (/*빈칸을 채워주세요*/){
+      result.push(left.shift());
+    } else {
+      result.push(right.shift());
+    }
+  }
+  while (left.length) {
+    /*빈칸을 채워주세요*/
+  }
+  while (right.length) {
+    /*빈칸을 채워주세요*/
+  }
+
+  return result;
+}
+
+const array = input.split(' ').map(n => parseInt(n, 10));
+
+console.log(mergeSort(array));

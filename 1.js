@@ -4,41 +4,41 @@ const input = fs.readFileSync("./tc.txt").toString().trim();
 
 const list = input.split("");
 
-function checkParentheses(list) {
+function checkParentheses(bracketList) {
+    let count = 0;
     let countParentheses = 0;
     let countSquare = 0;
     let countCurly = 0;
-  for (let i = 0; i < list.length; i++) {
-    if (list[i] === ")" && countParentheses === 0) {
-      console.log("NO");
-      return false;
-    } else if (list[i] === ")" && countParentheses > 0) {
-      countParentheses--;
-    } else if (list[i] === "(") {
-      countParentheses++;
-    } else if (list[i] === "}" && countCurly === 0) {
-      console.log("NO");
-      return false;
-    } else if (list[i] === "}" && countCurly > 0) {
-      countCurly--;
-    } else if (list[i] === "{") {
-      countCurly++;
-    } else if (list[i] === "]" && countSquare === 0) {
-      console.log("NO");
-      return false;
-    } else if (list[i] === "]" && countSquare > 0) {
-      countSquare--;
-    } else if (list[i] === "[") {
-      countSquare++;
+    let bracketOrder = [];
+    for (let i = 0; i < bracketList.length; i++) {
+        if (bracketList[i] === '(') {
+            count++;
+        }
+        else if (bracketList[i] === ')') {
+            count--;
+        }
     }
-  }
-  if (countParentheses === 0 && countCurly === 0 && countSquare === 0) {
-    console.log("YES");
+    if (count !== 0) {
+        return false;
+    }
+
+    for (let i = 0; i < bracketList.length; i++) {
+        
+        if (bracketList[i] === '(') {
+            bracketOrder.push('(');
+        } else if (bracketList[i] === ')') {
+            if (bracketOrder.length === 0) {
+                return false;
+            }
+            bracketOrder.pop();
+        }
+    }
+
     return true;
-  } else {
-    console.log("NO");
-    return false;
-  }
 }
 
-checkParentheses(list);
+if (checkParentheses(list) === true) {
+    console.log('YES');
+} else {
+    console.log('NO');
+}

@@ -2,38 +2,43 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-function mergeSort(arr){
-  if (arr.length <= 1){
-    return arr;
-  }
+const list = input.split("");
 
-  const mid = Math.floor(arr.length / 2);
-  const left = arr.slice(0,mid);
-  const right = arr.slice(mid);
-
-  return merge(mergeSort(left), mergeSort(right));
-}
-
-function merge(left, right){
-  let result = [];
-
-  while (/*빈칸을 채워주세요*/ && /*빈칸을 채워주세요*/){
-    if (/*빈칸을 채워주세요*/){
-      result.push(left.shift());
-    } else {
-      result.push(right.shift());
+function checkParentheses(list) {
+    let countParentheses = 0;
+    let countSquare = 0;
+    let countCurly = 0;
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] === ")" && countParentheses === 0) {
+      console.log("NO");
+      return false;
+    } else if (list[i] === ")" && countParentheses > 0) {
+      countParentheses--;
+    } else if (list[i] === "(") {
+      countParentheses++;
+    } else if (list[i] === "}" && countCurly === 0) {
+      console.log("NO");
+      return false;
+    } else if (list[i] === "}" && countCurly > 0) {
+      countCurly--;
+    } else if (list[i] === "{") {
+      countCurly++;
+    } else if (list[i] === "]" && countSquare === 0) {
+      console.log("NO");
+      return false;
+    } else if (list[i] === "]" && countSquare > 0) {
+      countSquare--;
+    } else if (list[i] === "[") {
+      countSquare++;
     }
   }
-  while (left.length) {
-    /*빈칸을 채워주세요*/
+  if (countParentheses === 0 && countCurly === 0 && countSquare === 0) {
+    console.log("YES");
+    return true;
+  } else {
+    console.log("NO");
+    return false;
   }
-  while (right.length) {
-    /*빈칸을 채워주세요*/
-  }
-
-  return result;
 }
 
-const array = input.split(' ').map(n => parseInt(n, 10));
-
-console.log(mergeSort(array));
+checkParentheses(list);

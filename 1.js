@@ -1,55 +1,18 @@
 "use strict";
 const fs = require("fs");
-// const input = fs.readFileSync("./tc.txt").toString().trim();
+const input = fs.readFileSync("./tc.txt").toString().trim();
+const nationWidth = {
+  korea: 220877,
+  Rusia: 17098242,
+  China: 9596961,
+  France: 543965,
+  Japan: 377915,
+  England: 242900,
+};
 
-// const list = input.split("");
-const testCases = [
-  { input: "{}{{[()()]}}", expected: "YES" },
-  { input: "[{()}]", expected: "YES" },
-  { input: "[{(})]", expected: "NO" },
-  { input: "(()[{}])", expected: "YES" },
-  { input: "({[)]}", expected: "NO" },
-  { input: "(((", expected: "NO" },
-  { input: "))}", expected: "NO" },
-];
-
-function checkParentheses(bracketList) {
-  let bracketCheck = [];
-
-  const pairs = {
-    ")": "(",
-    "}": "{",
-    "]": "[",
-  };
-  for (let i = 0; i < bracketList.length; i++) {
-    let char = bracketList[i];
-    console.log(`Step ${i}:`, { char, bracketCheck }); // 디버깅 로그
-    if (char === "(" || char === "{" || char === "[") {
-      bracketCheck.push(char);
-    } else if (char === ")" || char === "}" || char === "]") {
-      if (bracketCheck.length === 0 || bracketCheck.pop() !== pairs[char]) {
-        console.log("Mismatch or empty stack detected");
-        return false;
-      }
-    }
-  }
-  console.log("Final Stack:", bracketCheck); // 최종 스택 상태 확인
-  return bracketCheck.length === 0;
-}
-
-// if (checkParentheses(list)) {
-//   console.log('YES');
-// } else {
-//   console.log('NO');
-// }
-
-testCases.forEach(({ input, expected }, index) => {
-  const list = input.split("");
-  const result = checkParentheses(list) ? "YES" : "NO";
-  console.log(`Test Case ${index + 1}:`, {
-    input,
-    result,
-    expected,
-    pass: result === expected,
-  });
+const koreaWidth = nationWidth.korea;
+const countrySimilarToKoreaInSize = Object.keys(nationWidth).reduce((a, b) => {
+  nationWidth[a] > nationWidth[b] ? a : b;
 });
+
+console.log(nationWidth[countrySimilarToKoreaInSize]);

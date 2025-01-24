@@ -11,8 +11,18 @@ const nationWidth = {
 };
 
 const koreaWidth = nationWidth.korea;
-const countrySimilarToKoreaInSize = Object.keys(nationWidth).reduce((a, b) => {
-  nationWidth[a] > nationWidth[b] ? a : b;
-});
+let countrySimilarToKoreaInSize = Number.POSITIVE_INFINITY;
+let similarCountry = "";
 
-console.log(nationWidth[countrySimilarToKoreaInSize]);
+for (let country in nationWidth) {
+  if (Math.abs(koreaWidth - nationWidth[country]) === 0) {
+    continue;
+  } else if (
+    Math.abs(koreaWidth - nationWidth[country]) < countrySimilarToKoreaInSize
+  ) {
+    similarCountry = country;
+    countrySimilarToKoreaInSize = Math.abs(koreaWidth - nationWidth[country]);
+  }
+}
+
+console.log(`${similarCountry}, ${countrySimilarToKoreaInSize}`);

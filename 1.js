@@ -1,28 +1,16 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
-const nationWidth = {
-  korea: 220877,
-  Rusia: 17098242,
-  China: 9596961,
-  France: 543965,
-  Japan: 377915,
-  England: 242900,
-};
+let count = 0;
 
-const koreaWidth = nationWidth.korea;
-let countrySimilarToKoreaInSize = Number.POSITIVE_INFINITY;
-let similarCountry = "";
-
-for (let country in nationWidth) {
-  if (Math.abs(koreaWidth - nationWidth[country]) === 0) {
-    continue;
-  } else if (
-    Math.abs(koreaWidth - nationWidth[country]) < countrySimilarToKoreaInSize
-  ) {
-    similarCountry = country;
-    countrySimilarToKoreaInSize = Math.abs(koreaWidth - nationWidth[country]);
+for (let i = 0; i <= 1000; i++) {
+  // let numberList = getDigits(i);
+  let numberList = String(i).split('').map(Number);
+  for (let j = 0; j < numberList.length; j++) {
+    if (numberList[j] === 1) {
+      count++;
+    }
   }
 }
 
-console.log(`${similarCountry}, ${countrySimilarToKoreaInSize}`);
+console.log(count);

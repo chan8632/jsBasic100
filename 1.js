@@ -1,16 +1,19 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
-let count = 0;
+let obj = {};
 
-for (let i = 0; i <= 1000; i++) {
-  // let numberList = getDigits(i);
-  let numberList = String(i).split('').map(Number);
-  for (let j = 0; j < numberList.length; j++) {
-    if (numberList[j] === 1) {
-      count++;
+for (let i = 0; i <= 1000; i++){
+  let tem = i;
+  while (tem > 0) {
+    let num = tem % 10;
+    if (obj[num]) {
+      obj[num]++;
+    } else {
+      obj[num] = 1;
     }
+    tem = parseInt(tem / 10, 10);
   }
 }
 
-console.log(count);
+console.log(obj[1]);

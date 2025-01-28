@@ -2,9 +2,14 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-let s = '';
-for (let i = 0; i <= 1000; i++){
-  s += i;
+let limit = (50 - input.length) / 2;
+let res = "";
+for (let i = 0; i < limit; i++) {
+  res += "=";
 }
-console.log(s);
-console.log(s.match(/1/g).length);
+res += input;
+for (let j = 0; j < limit; j++){
+  res += "=";
+}
+
+console.log(res.length);

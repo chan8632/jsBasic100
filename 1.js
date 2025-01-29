@@ -1,8 +1,8 @@
 "use strict";
 const fs = require("fs");
-// const input = fs.readFileSync("./tc.txt").toString().trim();
+const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const input = "aaaaabbbbcdddd";
+// const input = "aaaaabbbbcdddd";
 let result = "";
 let count = 1;
 for (let i = 1; i < input.length; i++) {

@@ -1,19 +1,17 @@
 "use strict";
 const fs = require("fs");
-const input = fs.readFileSync("./tc.txt").toString().trim();
+// const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const arr = input.split('');
-let obj = {};
-let res = '';
-for (let i = 0; i < arr.length; i++){
-  if (obj[arr[i]] === undefined) {
-    obj[arr[i]] = 1;
+const input = "aaaaabbbbcdddd";
+let res = "";
+let count = 1;
+for (let i = 1; i < input.length; i++) {
+  if (input[i - 1] === input[i]) {
+    count++;
   } else {
-    obj[arr[i]] += 1;
+    res += input[i -1] + count;
+    count = 1;
   }
 }
-for (let idx in obj) {
-  res += idx;
-  res += obj[idx];
-}
+
 console.log(res);

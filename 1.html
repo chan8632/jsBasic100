@@ -243,21 +243,21 @@
           this.game = game;
         }
         heal(monster) {
-          if (this.hp + 20 < this.maxHp) {
-            console.log(
-              ">>> 1 heal 메소드 현재 hp에 20를 더했을 때 최대 체력보다 적은 경우"
-            );
-            this.hp += 20;
-          } else {
-            console.log(
-              ">>> 2 heal 메소드 현재 hp에 20를 더했을 때 최대 체력를 넘쳐서 최대 체력으로 현재 hp가 최대체력으로 바뀜."
-            );
-            this.hp = this.maxHp;
-          }
+          // if (this.hp + 20 < this.maxHp) {
+          //   console.log(
+          //     ">>> 1 heal 메소드 현재 hp에 20를 더했을 때 최대 체력보다 적은 경우"
+          //   );
+          //   this.hp += 20;
+          // } else {
+          //   console.log(
+          //     ">>> 2 heal 메소드 현재 hp에 20를 더했을 때 최대 체력를 넘쳐서 최대 체력으로 현재 hp가 최대체력으로 바뀜."
+          //   );
+          //   this.hp = this.maxHp;
+          // }
           // console.log(">>> 3 heal 메소드 현재 hp, 최대 hp 비교 끝");
           // this.hp -= monster.att;
           // console.log(">>> 4 heal 메소드 힐하고 몬스터한테 얻어 맞음.");
-          // this.hp = Math.min(this.maxHp, this.hp + 20);
+          this.hp = Math.min(this.maxHp, this.hp + 20);
           monster.attack(this);
         }
         getXp(xp) {

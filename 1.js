@@ -1,17 +1,24 @@
 "use strict";
 const fs = require("fs");
-const input = fs.readFileSync("./tc.txt").toString().trim();
+// const input = fs.readFileSync("./tc.txt").toString().trim();
 
-// const input = "aaaaabbbbcdddd";
-let result = "";
-let count = 1;
-for (let i = 1; i < input.length; i++) {
-  if (input[i - 1] === input[i]) {
+const input = 24;
+let N = parseInt(input, 10);
+let count = 0;
+while (N > 0) {
+  if (N >= 7) {
+    N -= 7;
+    count++;
+  } else if (N >= 3) {
+    N -= 3;
     count++;
   } else {
-    result += input[i -1] + count;
-    count = 1;
+    if (N === 0) {
+      break;
+    } else {
+      count = -1;
+      break;
+    }
   }
 }
-
-console.log(result);
+console.log(count);

@@ -2,34 +2,20 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const a = [1, 2, 3, 4];
-const b = ["a", "b", "c", "d"];
-let c = [];
+const N = parseInt(input, 10);
+let k = 0;
 
-// a.forEach((val, idx) => {
-//   if (idx % 2 === 0) {
-//     c.push([val, b[idx]]);
-//   } else {
-//     c.push([b[idx], val]);
-//   }
-// })
-// console.log(c);
-
-let res = a.map((val, idx) => {
-  if (idx % 2 === 0) {
-    return [val, b[idx]];
-  } else {
-    return [b[idx], val];
+function handShake(N) {
+  for (let i = 0; ; i++) {
+    if (N * 2 < i * (i + 1)) {
+      return i;
+    } 
   }
-});
+}
 
+k = handShake(N);
+let minsuHandShake = N - k * (k - 1) / 2;
+let peopleCount = k + 1;
+let res = [];
+res.push(minsuHandShake, peopleCount);
 console.log(res);
-// let res = [];
-// for (let i = 0; i < a.length; i++) {
-//   if (i % 2 === 0) {
-//     res.push([a[i], b[i]]);
-//   } else {
-//     res.push([b[i], a[i]]);
-//   }
-// }
-// console.log(res);

@@ -3,19 +3,20 @@ const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
 const N = parseInt(input, 10);
-let k = 0;
 
 function handShake(N) {
-  for (let i = 0; ; i++) {
-    if (N * 2 < i * (i + 1)) {
-      return i;
-    } 
+  let 사람수 = 0;
+  let 총악수 = 0;
+  let temp = 0;
+  while (true) {
+    총악수 = parseInt((사람수 * (사람수 - 1)) / 2, 10);
+    if (N < 총악수) {
+      break;
+    }
+    사람수++;
+    temp = 총악수;
   }
+  return [N - temp, 사람수];
 }
 
-k = handShake(N);
-let minsuHandShake = N - k * (k - 1) / 2;
-let peopleCount = k + 1;
-let res = [];
-res.push(minsuHandShake, peopleCount);
-console.log(res);
+console.log(handShake(N));

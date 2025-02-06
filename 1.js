@@ -2,21 +2,31 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const N = parseInt(input, 10);
-
-function handShake(N) {
-  let 사람수 = 0;
-  let 총악수 = 0;
-  let temp = 0;
-  while (true) {
-    총악수 = parseInt((사람수 * (사람수 - 1)) / 2, 10);
-    if (N < 총악수) {
-      break;
-    }
-    사람수++;
-    temp = 총악수;
+const inputData = input.split("\n");
+const busScheduleList = JSON.parse(inputData[0]);
+const curTimeData = inputData[1].replace(/"/g, " ").split(":");
+const curHour = parseInt(curTimeData[0], 10);
+const curMinute = parseInt(curTimeData[1], 10);
+const curTime = curHour * 60 + curMinute;
+let scheduleHour = 0;
+let scheduleMinute = 0;
+let remainHour = '0';
+let remainMinute = 0;
+console.log(`curTime: ${curTime}`);
+let res = [];
+for (let busSchedule of busScheduleList) {
+  let busScheduleData = busSchedule.split(":");
+  scheduleHour = parseInt(busScheduleData[0], 10);
+  scheduleMinute = parseInt(busScheduleData[1], 10);
+  let scheduleTime = scheduleHour * 60 + scheduleMinute;
+  let remainTime = scheduleTime - curTime;
+  if (remainTime >= 0) {
+    remainHour += parseInt(remainTime / 60, 10);
+    remainMinute = parseInt(remainTime % 60, 10);
+    res.push(`${remainHour}시간 ${remainMinute}분`);
+  } else {
+    res.push("지나갔습니다.");
   }
-  return [N - temp, 사람수];
 }
 
-console.log(handShake(N));
+console.log(res);

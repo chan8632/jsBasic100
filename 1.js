@@ -2,50 +2,40 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
+const inputNum = parseInt(input, 10);
+function era(input) {
+  const trueList = Array(input + 1).fill(true);
+  //? sqrt는 어떻게 쓰지?
+  const minArea = Math.sqrt(input);
 
-function prime_list(input) {
-  let n = parseInt(input, 10);
-  if (n < 2) return []; // 2 미만의 숫자는 소수 없음
+  trueList[0] = false;
+  trueList[1] = false;
 
-  let sieve = new Array(n + 1).fill(true);
-  sieve[0] = sieve[1] = false; // 0과 1은 소수가 아님
-
-  let m = Math.sqrt(n);
-  for (let i = 2; i <= m; i++) {
-    if (sieve[i]) {
-      //n은 n까지의 소수들을 구하는 과정
-      // j의 배수를 하나씩 없애가는 과정
-      // i * i부터 시작하는 이유는 i * i보다 작은 수들은 이미 다 소거가 돼서
-      for (let j = i * i; j <= n; j += i) {
-        sieve[j] = false;
+  for (let i = 2; i < trueList.length; i++) {
+    if (trueList[i] === true) {
+      for (let j = i * i; j < trueList.length; j += i) {
+        trueList[j] = false;
       }
     }
   }
-  return sieve
-    .map((value, idx) => (value ? idx : null))
-    .filter((value) => value !== null);
+  return trueList
+    .map((bool, idx) => (bool === true ? idx : null))
+    .filter((val) => val !== null);
 }
 
-const inputNum = parseInt(input, 10);
-let arr = prime_list(inputNum);
 let res = [];
+const primeList = era(inputNum);
 
-for (let prime of arr) {
-  if (arr.includes(inputNum - prime) && prime < inputNum - prime) {
+for (let prime of primeList) {
+  if (primeList.includes(inputNum - prime) && prime < inputNum - prime) {
     res.push([prime, inputNum - prime]);
   }
 }
 
 const diffPrimeList = res.map((prime) => prime[1] - prime[0]);
+const diffPrimeMinIdx = diffPrimeList.indexOf(Math.min(...diffPrimeList));
+const diffPrimeMaxIdx = diffPrimeList.indexOf(Math.max(...diffPrimeList));
 
-const diffMinIdx = diffPrimeList.indexOf(Math.min(...diffPrimeList));
-const diffMaxIdx = diffPrimeList.indexOf(Math.max(...diffPrimeList));
-
-
-
-console.log('전체 소수 합 그룹 : ' + JSON.stringify(res));
-console.log('차이가 가장 많이 나는 그룹 : ' +  res[diffMinIdx]);
-console.log('차이가 가장 적게 나는 그룹 : ' + res[diffMaxIdx]); 
-  
-
-
+console.log("전체 : " + JSON.stringify(res));
+console.log("차가 가장 작은 두 수 : " + res[diffPrimeMinIdx]);
+console.log("차가 가장 큰 두 수 : " + res[diffPrimeMaxIdx]);

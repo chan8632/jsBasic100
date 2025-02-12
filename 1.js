@@ -46,7 +46,7 @@ const diffMaxIdx = diffPrimeList.indexOf(Math.max(...diffPrimeList));
 
 console.log('전체 소수 합 그룹 : ' + JSON.stringify(res));
 console.log('차이가 가장 많이 나는 그룹 : ' +  res[diffMinIdx]);
-console.log('차이가 가장 적게 나는 그룹 : ' + res[diffMinIdx]); 
+console.log('차이가 가장 적게 나는 그룹 : ' + res[diffMaxIdx]); 
   
 
 

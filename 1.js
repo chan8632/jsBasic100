@@ -2,43 +2,32 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const inputNum = parseInt(input, 10);
-function era(input) {
-  // 주어진 수가 2 미만이면 소수가 없음.
-  if (input < 2) return [];
-  // Array를 쓰려면 new를 써야 하나봄.
-  const trueList = new Array(input + 1).fill(true);
-  // 배열의 두 요소를 한꺼번에 할당
-  trueList[0] = trueList[1] = false;
-  
-  // sqrt를 쓰면 sqrt(input)이상의 합성수들은 알아서 걸러진다.
-  // 대신 밑에 for에서 범위를 input으로 해야 한다.
-  const minArea = Math.sqrt(input);
-  for (let i = 2; i < minArea; i++) {
-    if (trueList[i] === true) {
-      for (let j = i * i; j < input; j += i) {
-        trueList[j] = false;
-      }
+function solution(a, b) {
+    const rowA = a.length;
+    const colA = a[0].length;
+    const rowB = b.length;
+    const colB = b[0].length;
+
+    if (colA !== rowB) {
+        return -1; // 행렬 곱셈 불가능
     }
-  }
-  return trueList
-    .map((bool, idx) => (bool === true ? idx : null))
-    .filter((val) => val !== null);
-} 
 
-let res = [];
-const primeList = era(inputNum);
+    let c = Array.from({ length: rowA }, () => Array(colB).fill(0));
 
-for (let prime of primeList) {
-  if (primeList.includes(inputNum - prime) && (prime < inputNum - prime)) {
-    res.push([prime, inputNum - prime]);
-  }
+    for (let i = 0; i < rowA; i++) {
+        for (let j = 0; j < colB; j++) {
+            for (let k = 0; k < colA; k++) {
+                c[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+
+    return c;
 }
 
-const diffPrimeList = res.map((prime) => prime[1] - prime[0]);
-const diffPrimeMinIdx = diffPrimeList.indexOf(Math.min(...diffPrimeList));
-const diffPrimeMaxIdx = diffPrimeList.indexOf(Math.max(...diffPrimeList));
+const a = [[1, 2, 3], [4, 5, 6]];
+const b = [[1, 4], [2, 5], [3, 6]];
 
-console.log('전체 : ' + JSON.stringify(res));
-console.log('차가 가장 작은 두 수 : ' + res[diffPrimeMinIdx]);
-console.log("차가 가장 큰 두 수 : " + res[diffPrimeMaxIdx]);
+console.log(solution(a, b)); 
+// 결과: [[14, 32], [32, 77]]
+

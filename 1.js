@@ -1,35 +1,26 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
+const graph = {
+  A: ["E", "C", "B"],
+  B: ["A"],
+  C: ["A"],
+  D: ["E", "F"],
+  E: ["D", "A"],
+  F: ["D"],
+};
 
-function solution(a, b) {
-  const rowA = a.length;
-  const colA = a[0].length;
-  const rowB = b.length;
-  const colB = b[0].length;
-
-  let c = Array.from({ length: rowA }, () => Array(colB).fill(0));
-
-  for (let i = 0; i < rowA; i++) {
-    for (let j = 0; j < colB; j++) {
-      for (let k = 0; k < colA; k++) {
-        c[i][j] += a[i][k] * b[k][j];
-      }
+// graph 자료구조와 startNode를 입력
+const DFS = (graph, startNode) => {
+  let visited = [];
+  let needVisit = [startNode];
+  while (needVisit.length !== 0) {
+    let node = needVisit.shift();
+    if (!visited.includes(node)) {
+      visited.push(node);
+      needVisit = [...graph[node], ...needVisit];
     }
   }
-
-  return c;
-}
-
-const a = [
-  [1, 2],
-  [2, 4],
-];
-
-const b = [
-  [1, 0],
-  [0, 3],
-];
-
-console.log(solution(a, b));
-// 결과: [[14, 32], [32, 77]]
+  return visited;
+};
+console.log(DFS(graph, "E"));

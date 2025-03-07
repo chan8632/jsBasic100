@@ -2,45 +2,22 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-const user_input = input.split(" ");
-const start = parseInt(user_input[0], 10);
-const end = parseInt(user_input[1], 10);
+// 3이나 6, 9 일 때만 박수를 쳐야합니다. 예를 들어 13, 16과 같이 3과 6, 9 만으로 된 숫자가 아닐 경우엔 박수를 치지 않습니다. 36일 때 박수를 쳤다면 박수를 친 횟수는 5번
 
-const graph = {
-  1: [2, 3, 4],
-  2: [1, 3, 4, 5, 6],
-  3: [1, 2, 7],
-  4: [1, 2, 5, 6],
-  5: [2, 4, 6, 7],
-  6: [2, 4, 5, 7],
-  7: [3, 5, 6],
-};
+// 1. 범위를 알아내면 해당 범위에는 몇번 박수가 나오는지를 알아야 함.
+// 어떤 수가 주어졌을 때 3,6,9가 포함된 숫자에 어느 범위에 있는지를 알아야 함.
 
+// 1. 범위를 알아내면 해당 범위에는 몇번 박수가 나오는지를 알아야 함.
 
-function findMaxDistance(graph, start, end) {
-  let maxDistance = 0;
-  // dfs 노드, 방문한 노드, 거리 로 구분
-  function dfs(node, visited, distance) {
-    if (node === end) {
-      // 목표 노드에 달성시 가장 큰 거리 최신화
-      maxDistance = Math.max(maxDistance, distance);
-      // 가장 최근에 호출한 dfs로 가기
-      return;
-    }
-    
-    for (let neighbor of graph[node]) {
-      if (!visited.has(neighbor)) {
-        visited.add(neighbor);
-        dfs(neighbor, visited, distance + 1);
-        visited.delete(neighbor); // 백트래킹
-      }
-    }
-  }
-  // 처음 시작를 넣고 방문 노드는 Set에 추가
-  dfs(start, new Set([start]), 0);
-  // 마지막에 가장 큰 거리 배출
-  return maxDistance;
-}
+// 3 = 1, 6 = 2, 9 = 3, / 33 = 4, 36 = 5, 39 = 6, /  63 = 7, 66 = 8 , 69 = 9 / 93 = 10, 96 = 11, 99 = 12 / 333 = 13, 336 = 14 339 = 15 , 363 = 16, 366 = 17,  369 = 18
 
-// 결과 출력
-console.log(findMaxDistance(graph, start, end)); // 6
+// 자릿수를 알아야함.
+// 만약 1자리 라면 3
+// 2자리라면 3 + 9
+// 3자리라면 3 + 9 + 27
+// 333 이라면 3 + 9 + 이후
+// 3으로 나누기 111
+// 336 112
+// 339 113
+// 363 121
+

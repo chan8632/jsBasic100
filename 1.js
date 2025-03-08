@@ -1,17 +1,25 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
+const enter = input.split('\n').map(Number);
+const testCase = enter[0];
+const 
 
-// 1부터 주어진 수 까지 하나하나 까보기
-// 검사 시 문자로 ...로 펼친다음 문자로 변경
-// 모든 문자들이 [3,6,9] 중 하나에 포함되어야만 숫자가 포함되게 할 것.
-const inputNum = parseInt(input, 10);
+// 입력
+// 1
+// 5 3
+// 1 0 0 1 0
+// 0 1 0 0 1
+// 0 0 0 1 0
+// 0 0 0 0 0
+// 0 0 1 0 0
 
-let count = 0;
-for (let i = 1; i <= inputNum; i++){
-  if ([...String(i)].every(digits => ['3', '6', '9'].includes(digits))) {
-    count++;
-  }
-}
+// 주어진 배열 2차원으로 만들기
 
-console.log(count);
+
+
+
+
+// 삼중for문으로 지뢰 갯수 카운트
+// 카운트한 지뢰들 중 가장 큰 거 도출
+

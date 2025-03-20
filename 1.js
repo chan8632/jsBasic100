@@ -2,28 +2,24 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
 
-// 예를 들어 2번 순회했을 때 변하기 전의 리스트와 변한 후의 리스트의 값은 아래와 같습니다.
+const inputData = input.split("\r\n");
 
-// 순회전_리스트 = [10, 20, 25, 27, 34, 35, 39]
-// 순회후_리스트 = [35, 39, 10, 20, 25, 27, 34]
+function combination(arr) {
+  const combi = [];
 
-// 2번
-// 왼 = 배열길이에서 - 2(입력한 수), 2(입력한 수) , 오 = 0(처음), 배열길이에서 - 2(입력한 수)
-
-const l = [10, 20, 25, 27, 34, 35, 39]; //기존 입력 값
-const n = parseInt(input, 10);
-let diffList = [];
-function rotate(inL, inN) {
-    let leftArr = [...inL].splice(inL.length - inN, inN);
-    let rightArr = [...inL].splice(0, inL.length - inN);
-    const rotArr = [...leftArr, ...rightArr];
-    for (let i = 0; i < inL.length; i++){
-        diffList.push(Math.abs(inL[i] - rotArr[i]));
+  const f = (prefix, chars) => {
+    for (let i = 0; i < chars.length; i++) {
+      combi.push(prefix + chars[i]);
+      // slice와 재귀 함수를 통해 combination를 구할 수 있다.
+      f(prefix + chars[i], chars.slice(i + 1));
     }
-    const diffSortList = [...diffList].sort((a, b) => a - b);
-    const minIdx = diffList.indexOf(diffSortList[0]);
-    console.log('index: ' + minIdx);
-    console.log('value: ' + inL[minIdx] + ',' + rotArr[minIdx]);
+  };
+  f("", arr);
+  const result = combi.filter((arr) => arr.length === n);
+  console.log(result);
+  return result.length;
 }
 
-rotate(l, n);
+const arr = inputData[0].split(",");
+const n = parseInt(inputData[1], 10);
+console.log(combination(arr));

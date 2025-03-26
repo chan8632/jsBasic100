@@ -4,17 +4,25 @@ const input = fs.readFileSync("./tc.txt").toString().trim().split("\r\n");
 
 function math(e) {
   let chars = e.split("");
+  const open = ['(', '{', '['];
+  const close = [')', '}', ']'];
+  const pairs = {
+    '(': ')',
+    '{': '}',
+    '[':']',
+  }
   let stack = [];
   for (let i = 0; i < chars.length; i++){
     let char = chars[i];
-    if (char === '(') {
+    console.log('문자 하나 씩 분해 : ' + char);
+    if (open.includes(char)) {
       stack.push(char);
-    } else if (char === ')') {
-      if (stack.length === 0) {
+    } else if (close.includes(char)) {
+      if (pairs[stack.pop()] !== char) {
         return false;
       }
-      stack.pop();
     }
+    console.log('스택 요소' + stack);``
   }
   return stack.length === 0;
 }

@@ -1,30 +1,48 @@
 "use strict";
 const fs = require("fs");
-const input = fs.readFileSync("./tc.txt").toString().trim().split("\r\n");
+const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-const inputData = 'ABCDEFGH';
-const 입력성분 = inputData.split('');
-const 일치갯수 = 4;
-const 비교대상약들 = ["EFGHIJKL", "EFGHIJKM", "EFGHIJKZ"];
-let 결과리스트 = [];
+let alphabetList = [];
+for (let i = 65; i < 91; i++) {
+  let alphabet = String.fromCharCode(i);
+  alphabetList.push(alphabet);
+}
 
-for (let 비교대상약 of 비교대상약들) {
-  let 비교대상약성분 = 비교대상약.split('');
-  let 세로 = 입력성분.length;
-  let 가로 = 비교대상약성분.length;
-  let 비교다이나믹 = Array.from({ length: 세로 + 1 }, () => Array(가로 + 1).fill(0) );
-  for (let i = 1; i <= 세로; i++){
-    for (let j = 1; j <= 가로; j++){
-      if (입력성분[i] === 비교대상약성분[j]) {
-        비교다이나믹[i][j] = 비교다이나믹[i-1][j-1] + 1; 
-      } else {
-        비교다이나믹[i][j] = Math.max(비교다이나믹[i - 1][j], 비교다이나믹[i][j - 1]);
+function generateRandomMedicines() {
+  let medicineList = [];
+  for (let i = 0; i < 100; i++) {
+    let ingredients = [];
+    while (ingredients.length < 8) {
+      let ingredient =
+        alphabetList[Math.floor(Math.random() * alphabetList.length)];
+      if (!ingredients.includes(ingredient)) {
+        ingredients.push(ingredient);
       }
     }
+    medicineList.push(ingredients.join(""));
   }
-  
-  if (비교다이나믹[세로][가로] === 4) {
-    결과리스트.push(비교대상약);
-  }
+  return medicineList;
 }
-console.log(결과리스트);
+
+function findSimilarMedicines(inputIngredients, matchCount) {
+  let medicineList = generateRandomMedicines();
+  let inputSet = new Set(inputIngredients);
+  let resultList = [];
+
+  for (let medicine of medicineList) {
+    let medicineSet = new Set(medicine);
+    let commonSet = new Set(
+      [...medicineSet].filter((item) => inputSet.has(item))
+    );
+
+    if (commonSet.size === matchCount) {
+      resultList.push(medicine);
+    }
+  }
+  return resultList;
+}
+
+const inputIngredients = input[0];
+const matchCount = parseInt(input[1], 10);
+
+console.log(findSimilarMedicines(inputIngredients, matchCount));

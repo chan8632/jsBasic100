@@ -1,1 +1,5 @@
-ABCDEFGH 4
+A(B(C(D(E(F(G(H(I(J(K1))J1)I1)H1(G1))F1(E1(D1)))C1)B1)A1)X1(Y1(Z1(1(2(3(4(5(6(7(8(9(0(alpha(beta(gamma(delta(epsilon(zeta(eta(theta(iota(kappa(lambda(mu(nu(xi(omicron(pi(rho(sigma(tau(upsilon(phi(chi(psi(omega)))))))))))))))))))))))))))))))))))))
+x(y(z(a(b(c(d(e(f(g(h(i(j(k(l(m(n(o(p(q(r(s(t(u(v(w(x(y(z))))))))))))))))))))))))))))1a(2b(3c(4d(5e(6f(7g(8h(9i(0j(k1(l2(m3))))))))))))foo(bar(baz(qux(quux(corge(grault(garply(waldo(fred(plugh(xyzzy(thud(end))))))))))))junk(data(more(even(more(deep(still(going(keep(it(up(really(deep(level(end))))))))))))))node(left(right(deeper(more(layers(here(yes(keep(going(ok(one(two(three(four(five(six(seven(eight(nine(ten)))))))))))))))))))
+part1(part2a(part2b(part2c(part2d(part2e(part2f(part2g(part2h(part2i(part2j(end)))))))))))alpha1(beta1(gamma1(delta1(epsilon1(zeta1(eta1(theta1(iota1(kappa1(lambda1(mu1(nu1(xi1(omicron1(pi1(rho1(sigma1(tau1(upsilon1(phi1(chi1(psi1(omega1(end))))))))))))))))))))))))mix1(mix2(mix3(###@@@$$$%%%^^^&&&***((()))123abcDEFghiJKL(more(more(more(more(more(deepdeepdeep)))))))
+abc(def(ghi(jkl(mno(pqr(stu(vwx(yza(bcd(cde(def(efg(fgh(ghi(hij))))))))))))))))
+outer1(outer2(outer3(outer4(outer5(outer6(outer7(outer8(outer9(outer10(inside(end))))))))))))))

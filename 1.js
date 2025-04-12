@@ -1,74 +1,60 @@
 "use strict";
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim();
+// 1. 반 점수 모두가 담긴 전교 점수 다중 리스트를 만들어주세요. ok
+// return를 두 개를 해야 할 때
+// 2. 반 평균을 구하세요.
+// 3. 반 1등 점수를 구하세요.
+// 4. 전교 평균을 구하세요.
+//한 반에 30명인 학생, 총 7개의 반
+let student_score = [];
+let class_score = [];
+let total_score = [];
 
-// let alphabetList = [];
-// for (let i = 65; i < 91; i++) {
-//   let alphabet = String.fromCharCode(i);
-//   alphabetList.push(alphabet);
-// }
-
-// function generateMedicine() {
-//   let medicineList = [];
-//   for (let i = 0; i < 100; i++) {
-//     let ingredients = [];
-//     while (ingredients.length < 8) {
-//       let ingredient =
-//         alphabetList[Math.floor(Math.random() * alphabetList.length)];
-//       if (!ingredients.includes(ingredient)) {
-//         ingredients.push(ingredient);
-//       }
-//     }
-//     medicineList.push(ingredients.join(""));
-//   }
-//   return medicineList;
-// }
-// function findCommonMedicines(inputIngredients, matchCount) {
-//   const medicineList = generateMedicine();
-//   const inputSet = new Set(inputIngredients);
-//   let result = [];
-//   for (let medicine of medicineList) {
-//     let medicineSet = new Set(medicine);
-//     let commonSet = new Set([...medicineSet].filter((item) => inputSet.has(item)));
-//     if (commonSet.size === matchCount) {
-//       result.push(medicine);
-//     }
-//   }
-//   return result;
-// }
-
-// const inputIngredients = input[0];
-// const matchCount = parseInt(input[1], 10);
-
-// console.log(findCommonMedicines(inputIngredients, matchCount));
-
-
-
-// 문자열을 문자 배열로 분할
-const data = input.split("");
-
-// 괄호 검증을 위한 스택
-let stack = [];
-
-function parsing() {
-  for (let str of data) {
-    if (str === "(") {
-      stack.push(str);
-    } else if (str === ")") {
-      if (stack.length === 0) {
-        console.log("False"); // 닫는 괄호가 더 많음
-        return;
-      }
-      stack.pop();
-    }
+function generate_student_score() {
+  student_score = [];
+  for (let i = 0; i < 5; i++) {
+    student_score.push(Math.floor(Math.random() * 100) + 1);
   }
-
-  // 최종적으로 스택이 비어있어야 정상
-  if (stack.length === 0) {
-    console.log("True"); // 괄호 정상
-  } else {
-    console.log("False"); // 여는 괄호 남음
-  }
+  return student_score;
 }
 
-parsing();
+function generate_class_score() {
+  class_score = [];
+  for (let i = 0; i < 30; i++) {
+    class_score.push(generate_student_score());
+  }
+  return class_score;
+}
+
+function generate_total_score() {
+  total_score = [];
+  for (let i = 0; i < 7; i++) {
+    total_score.push(generate_class_score());
+  }
+  return total_score;
+}
+
+class ClassInfo {
+  constructor() {
+    this.school = generate_class_score();
+  }
+  findClassAvg() {
+    let avg_score = this.school;
+    for (let i = 0; i < 7; i++) {
+      let classTotal = 0;
+      for (let j = 0; j < 30; j++) {
+        let studentTotal = 0;
+        for (let k = 0; k < 5; k++) {
+          studentTotal += avg_score[i][j][k];
+        }
+        avg_score[i][j] = studentTotal;
+        classTotal += avg_score[i][j];
+      }
+      avg_score[i] = Math.floor(classTotal / 150);
+    }
+    return avg_score;
+  }  
+}
+const school = new ClassInfo();
+console.log(school.findClassAvg());

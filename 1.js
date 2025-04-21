@@ -1,61 +1,58 @@
 "use strict";
 const fs = require("fs");
-const input = fs.readFileSync("./tc.txt").toString().trim();
-// 1. 반 점수 모두가 담긴 전교 점수 다중 리스트를 만들어주세요. ok
-// return를 두 개를 해야 할 때
-// 2. 반 평균을 구하세요.
-// 3. 반 1등 점수를 구하세요.
-// 4. 전교 평균을 구하세요.
-//한 반에 30명인 학생, 총 7개의 반
-//아래 코드는 힌트입니다.
+const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-let student_score = [];
-let class_score = [];
-let total_score = [];
-for (let i = 0; i < 7; i++) {
-  class_score = [];
-  for (let j = 0; j < 30; j++) {
-    student_score = [];
-    for (let k = 0; k < 5; k++) {
-      student_score.push(Math.floor(Math.random() * 101));
+const 텃밭 = [
+  [0, 0, 0, 1, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0]
+];;
+const 텃밭너비 = 텃밭.length;
+const 텃밭높이 = 텃밭[0].length;
+
+let dp = Array.from({ length: 텃밭너비 }, () => Array(0).fill(텃밭높이));
+
+let max = 0;
+let maxRow = 0;
+let maxCol = 0;
+for (let i = 0; i < 텃밭너비; i++) {
+  for (let j = 0; j < 텃밭높이; j++) {
+    if (텃밭[i][j] === 0) {
+      if (i === 0 || j === 0) {
+        dp[i][j] = 1;
+      } else {
+        dp[i][j] = Math.min(dp[i - 1][j], dp[i - 1][j - 1], dp[i][j - 1]) + 1;
+      }
+    } else {
+      dp[i][j] = 0;
     }
-    class_score.push(student_score);
+    if (max < dp[i][j]) {
+      max = dp[i][j];
+      maxRow = i;
+      maxCol = j;
+    }
   }
-  total_score.push(class_score);
 }
 
-// console.log("반 점수 모두가 담긴 전교 점수 다중 리스트");
-// console.log(total_score);
+console.log(max, maxRow, maxCol);
 
-// 2. 반 평균을 구하세요. ok
-
-// 3. 반 1등 점수를 구하세요. ok
-
-// 4. 전교 평균을 구하세요.
-
-let studentSum = 0;
-let classSum = 0;
-let classAvgList = [];
-let classFirstList = [];
-let totalAvg = [];
-for (let eathClass of total_score) {
-  let eachClassEachScoreSumList = [];
-  for (let eathStudent of eathClass) {
-    studentSum = eathStudent.reduce((a, b) => a + b);
-    eachClassEachScoreSumList.push(studentSum);
+for (let i = maxRow - max + 1; i < maxRow + 1; i++) {
+  for (let j = maxCol - max + 1; j < maxCol + 1; j++) {
+    dp[i][j] = "#";
   }
-  let eachClassSum = eachClassEachScoreSumList.reduce((a, b) => a + b);
-  let eachClassAvg = Math.floor(eachClassSum / 150);
-  let eachClassFirst = Math.floor(Math.max(...eachClassEachScoreSumList) / 5);
-  classAvgList.push(eachClassAvg);
-  classFirstList.push(eachClassFirst);
-  totalAvg.push(eachClassSum);
 }
-console.log("반 평균");
-console.log(classAvgList);
 
-console.log("반 일등들");
-console.log(classFirstList);
-
-console.log("전교 평균");
-console.log(Math.floor(totalAvg.reduce((a,b)=> a + b) / (5* 30 * 7)));
+for (let i = 0; i < dp.length; i++){
+  for (let j = 0; j < dp[0].length; j++){
+    if (dp[i][j] === 0) {
+      dp[i][j] = 1;
+    } else if (dp[i][j] > 0) {
+      dp[i][j] = 0;
+    }
+  }
+}
+for (let row of dp) {
+  console.log(row.join(' '));
+}

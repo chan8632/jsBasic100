@@ -2,57 +2,35 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-const 텃밭 = [
-  [0, 0, 0, 1, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 1, 0, 0],
-  [0, 0, 0, 1, 0]
-];;
-const 텃밭너비 = 텃밭.length;
-const 텃밭높이 = 텃밭[0].length;
+function solution(사람수, 배달거리) {
+  let 배달상황 = 배달거리.slice(0, 사람수);
+  let time = 0;
 
-let dp = Array.from({ length: 텃밭너비 }, () => Array(0).fill(텃밭높이));
-
-let max = 0;
-let maxRow = 0;
-let maxCol = 0;
-for (let i = 0; i < 텃밭너비; i++) {
-  for (let j = 0; j < 텃밭높이; j++) {
-    if (텃밭[i][j] === 0) {
-      if (i === 0 || j === 0) {
-        dp[i][j] = 1;
-      } else {
-        dp[i][j] = Math.min(dp[i - 1][j], dp[i - 1][j - 1], dp[i][j - 1]) + 1;
+  while (배달상황.some((x) => x !== 0)) {
+    console.log(배달상황);
+    for (let i = 0; i < 사람수; i++){
+      배달상황[i]--;
+    }
+      for (let i = 0; i < 사람수; i++) {
+        배달상황[i]--;
+        if (배달거리.length !== 0) {
+          if (배달상황[i] === 0) {
+            배달상황[i] = 배달거리.pop();
+          }
+        } else {
+          if (배달상황[i] === 0) {
+            배달상황.splice(i, 1);
+          }
+        }
       }
-    } else {
-      dp[i][j] = 0;
+      time++;
     }
-    if (max < dp[i][j]) {
-      max = dp[i][j];
-      maxRow = i;
-      maxCol = j;
-    }
+    return time;
   }
 }
 
-console.log(max, maxRow, maxCol);
+const 배달원 = 3;
+const 배달시간 = [1, 2, 1, 3, 3, 3];
 
-for (let i = maxRow - max + 1; i < maxRow + 1; i++) {
-  for (let j = maxCol - max + 1; j < maxCol + 1; j++) {
-    dp[i][j] = "#";
-  }
-}
-
-for (let i = 0; i < dp.length; i++){
-  for (let j = 0; j < dp[0].length; j++){
-    if (dp[i][j] === 0) {
-      dp[i][j] = 1;
-    } else if (dp[i][j] > 0) {
-      dp[i][j] = 0;
-    }
-  }
-}
-for (let row of dp) {
-  console.log(row.join(' '));
-}
+console.log(solution(배달원, 배달시간));
+// 출력값 = 5

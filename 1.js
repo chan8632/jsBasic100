@@ -2,32 +2,37 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-function solution(배달원수, 송장목록) {
-  //상차목록 생성
-  let 상차목록 = Array(배달원수).fill(0);
-  //초기상차
-  for (let i = 0; i < 배달원수; i++) {
-    상차목록[i] = 송장목록.shift();
-  }
-  let time = 0;
-  while (상차목록.some((x) => x > 0) || 송장목록.length > 0) {
-    time++;
-    for (let i = 0; i < 상차목록.length; i++) {
-      if (상차목록[i] > 0) {
-        상차목록[i]--;
-      }
-    }
-    for (let i = 0; i < 상차목록.length; i++){
-      if (상차목록[i] === 0 && 송장목록.length > 0) {
-        상차목록[i] = 송장목록.shift();
-      }
+const readline = require("readline");
+
+
+let uniqueList = [];
+function uniqueItem(inputItems) {
+  let items = inputItems.split(',').map(x => Number(x));
+  for (let item of items) {
+    if (!uniqueList.includes(item)) {
+      uniqueList.push(item);
     }
   }
-  return time;
 }
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-const 배달원 = 3;
-const 배달시간 = [1, 2, 1, 3, 3, 3];
-
-console.log(solution(배달원, 배달시간));
-// 출력값 = 5
+function askQuestion(query) {
+  return new Promise((res) => {
+    rl.question(query, (answer) => {
+      res(answer);
+    })
+  });
+}
+// 입력 대기 함수
+async function getInput() {
+  for (let i = 1; i < 5; i++) {
+    const items = await askQuestion(`${i}번`);
+    uniqueItem(items);
+  }
+  console.log("출력값" + uniqueList);
+  rl.close();
+}
+getInput();

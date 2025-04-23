@@ -2,31 +2,28 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-function solution(사람수, 배달거리) {
-  let 배달상황 = 배달거리.slice(0, 사람수);
-  let time = 0;
-
-  while (배달상황.some((x) => x !== 0)) {
-    console.log(배달상황);
-    for (let i = 0; i < 사람수; i++){
-      배달상황[i]--;
-    }
-      for (let i = 0; i < 사람수; i++) {
-        배달상황[i]--;
-        if (배달거리.length !== 0) {
-          if (배달상황[i] === 0) {
-            배달상황[i] = 배달거리.pop();
-          }
-        } else {
-          if (배달상황[i] === 0) {
-            배달상황.splice(i, 1);
-          }
-        }
-      }
-      time++;
-    }
-    return time;
+function solution(배달원수, 송장목록) {
+  //상차목록 생성
+  let 상차목록 = Array(배달원수).fill(0);
+  //초기상차
+  for (let i = 0; i < 배달원수; i++) {
+    상차목록[i] = 송장목록.shift();
   }
+  let time = 0;
+  while (상차목록.some((x) => x > 0) || 송장목록.length > 0) {
+    time++;
+    for (let i = 0; i < 상차목록.length; i++) {
+      if (상차목록[i] > 0) {
+        상차목록[i]--;
+      }
+    }
+    for (let i = 0; i < 상차목록.length; i++){
+      if (상차목록[i] === 0 && 송장목록.length > 0) {
+        상차목록[i] = 송장목록.shift();
+      }
+    }
+  }
+  return time;
 }
 
 const 배달원 = 3;

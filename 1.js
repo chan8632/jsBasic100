@@ -2,27 +2,26 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-let 입력 = "1번: 4,2,3 2번: 3 3번: 2,3,4,1 4번: 2,3";
-let 옷정보만모은것 = [];
-let 띄워쓰기기준으로나눠보기 = 입력.split(" ");
-for (let i = 0; i < 띄워쓰기기준으로나눠보기.length; i++) {
-  if (i % 2 !== 0) {
-    옷정보만모은것.push(띄워쓰기기준으로나눠보기[i]);
-  }
-}
+function solution(i) {
+  let idx = i.split(/[0-9]번: /g);
+  idx.shift();
+  for (let i = 0; i < idx.length; i++) {
+    idx[i] = idx[i].replace(/ /g, "").split(",");
 
-let uniqueList = [];
-function uniqueItem(inputAllItems) {
-  for (let inputItems of inputAllItems) {
-    let items = inputItems.split(",").map((x) => Number(x));
-    for (let item of items) {
-      if (!uniqueList.includes(item)) {
-        uniqueList.push(item);
+    idx[i] = idx[i].map((x) => parseInt(x, 10));
+  }
+
+  let answer = [];
+
+  for (let i of idx) {
+    for (let j of i) {
+      if (!answer.includes(j)) {
+        answer.push(j);
       }
     }
   }
-  return uniqueList;
+  return answer;
 }
-console.log(uniqueItem(옷정보만모은것));
 
-
+let i = "1번: 3,1 2번: 4 3번: 2,1,3 4번: 2,1,3,4";
+console.log(solution(i));

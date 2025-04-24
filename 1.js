@@ -2,37 +2,27 @@
 const fs = require("fs");
 const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-const readline = require("readline");
-
+let 입력 = "1번: 4,2,3 2번: 3 3번: 2,3,4,1 4번: 2,3";
+let 옷정보만모은것 = [];
+let 띄워쓰기기준으로나눠보기 = 입력.split(" ");
+for (let i = 0; i < 띄워쓰기기준으로나눠보기.length; i++) {
+  if (i % 2 !== 0) {
+    옷정보만모은것.push(띄워쓰기기준으로나눠보기[i]);
+  }
+}
 
 let uniqueList = [];
-function uniqueItem(inputItems) {
-  let items = inputItems.split(',').map(x => Number(x));
-  for (let item of items) {
-    if (!uniqueList.includes(item)) {
-      uniqueList.push(item);
+function uniqueItem(inputAllItems) {
+  for (let inputItems of inputAllItems) {
+    let items = inputItems.split(",").map((x) => Number(x));
+    for (let item of items) {
+      if (!uniqueList.includes(item)) {
+        uniqueList.push(item);
+      }
     }
   }
+  return uniqueList;
 }
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+console.log(uniqueItem(옷정보만모은것));
 
-function askQuestion(query) {
-  return new Promise((res) => {
-    rl.question(query, (answer) => {
-      res(answer);
-    })
-  });
-}
-// 입력 대기 함수
-async function getInput() {
-  for (let i = 1; i < 5; i++) {
-    const items = await askQuestion(`${i}번`);
-    uniqueItem(items);
-  }
-  console.log("출력값" + uniqueList);
-  rl.close();
-}
-getInput();
+

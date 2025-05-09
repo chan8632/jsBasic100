@@ -1,27 +1,64 @@
 "use strict";
 const fs = require("fs");
-const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
+// const input = fs.readFileSync("./tc.txt").toString().trim().split(" ");
 
-function solution(i) {
-  let idx = i.split(/[0-9]번: /g);
-  idx.shift();
-  for (let i = 0; i < idx.length; i++) {
-    idx[i] = idx[i].replace(/ /g, "").split(",");
-
-    idx[i] = idx[i].map((x) => parseInt(x, 10));
-  }
-
-  let answer = [];
-
-  for (let i of idx) {
-    for (let j of i) {
-      if (!answer.includes(j)) {
-        answer.push(j);
+function solution(board, moves) {
+  let colunmBoard = [];
+  for (let j = 0; j < board[0].length; j++) {
+    let columOne = [];
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][j] > 0) {
+        columOne.push(board[i][j]);
       }
     }
+    colunmBoard.push(columOne);
   }
-  return answer;
+  let pickList = [];
+  let score = 0;
+  for (let mv of moves) {
+    mv--;
+    let puzzle = colunmBoard[mv].shift();
+    if (puzzle === undefined) {
+      score--;
+    } else {
+      pickList.push(puzzle);
+    }
+  }
+
+  let changed = true;
+
+  while (changed) {
+    console.log(`리스트 : ${pickList}`);
+    console.log(`점수 : ${score}`);
+    let i = 0;
+    changed = false;
+    while (i < pickList.length) {
+      let j = i + 1;
+      while (pickList[i] === pickList[j]) j++;
+      let count = j - i;
+      if (count >= 2) {
+        score += count * pickList[i];
+        pickList.splice(i, count);
+        changed = true;
+        break;
+      } else {
+        i = j
+      }
+    }
+    
+  }
+  console.log(score);
 }
 
-let i = "1번: 3,1 2번: 4 3번: 2,1,3 4번: 2,1,3,4";
-console.log(solution(i));
+// 예제 입력
+const board = [
+  [1, 1, 0, 0],
+  [3, 1, 0, 3],
+  [3, 5, 0, 1],
+  [3, 4, 4, 1],
+  [1, 1, 1, 1],
+];
+
+const moves = [1, 1, 1, 1, 1, 2];
+
+solution(board, moves); // 출력: 2
